@@ -2,7 +2,6 @@ const DataEvento = require("../models/DataEvento");
 
 class DataEventoController {
   async store(req, res) {
-    req.body.evento;
     const dataEvento = await DataEvento.create({
       evento: req.body.evento,
       data: req.body.data,
@@ -17,6 +16,11 @@ class DataEventoController {
     const dataEvento = await DataEvento.findById(req.params.id).populate(
       "pedidos"
     );
+    return res.json(dataEvento);
+  }
+
+  async all(req, res) {
+    const dataEvento = await DataEvento.find().populate("pedidos");
     return res.json(dataEvento);
   }
 }
