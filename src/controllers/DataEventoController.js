@@ -18,6 +18,14 @@ class DataEventoController {
     );
     return res.json(dataEvento);
   }
+  async delete(req, res) {
+    const dataEvento = await DataEvento.findByIdAndDelete(req.params.id);
+    return res.json({ status: "ok" });
+  }
+  async deleteAll(req, res) {
+    const dataEvento = await DataEvento.deleteMany();
+    return res.json({ status: "ok" });
+  }
 
   async all(req, res) {
     const dataEvento = await DataEvento.find().populate("pedidos");

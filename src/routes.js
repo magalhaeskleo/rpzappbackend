@@ -7,8 +7,10 @@ const PedidosController = require("./controllers/PedidosController");
 
 routes.post("/dataEvento", DataEventoController.store);
 routes.post("/dataEvento/:id/pedidos", PedidosController.store);
-routes.get("/dataEvento/:id", DataEventoController.show);
-routes.get("/dataEvento", DataEventoController.all);
+routes.get("/dataEventoId/:id", DataEventoController.show);
+routes.get("/dataEventoAll", DataEventoController.all);
+routes.delete("/dataEventoDel/:id", DataEventoController.delete);
+routes.delete("/dataEventoDelAll", DataEventoController.deleteAll);
 
 routes.get("/teste", (req, res) => {
   return res.send("Hello word");
