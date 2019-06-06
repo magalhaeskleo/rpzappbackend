@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const DataEvento = new mongoose.Schema(
   {
-    evento: String,
-    data: String,
-    horario: String,
-    local: String,
+    evento: { type: String, required: true },
+    data: { type: String, required: true },
+    horario: { type: String, required: true },
+    local: { type: String, required: true },
     pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pedido" }]
   },
   {
