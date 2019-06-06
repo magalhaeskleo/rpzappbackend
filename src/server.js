@@ -3,6 +3,8 @@ var cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
+app.use(cors());
+
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
@@ -16,7 +18,7 @@ mongoose.connect(
     useNewUrlParser: true
   }
 );
-app.use(cors());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
