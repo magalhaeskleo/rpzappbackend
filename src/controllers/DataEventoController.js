@@ -7,7 +7,8 @@ class DataEventoController {
       data: req.body.data,
       horario: req.body.horario,
       local: req.body.local,
-      pedidos: req.body.pedidos
+      pedidos: req.body.pedidos,
+      nomeLista: req.body.nomeLista
     });
     return res.json(dataEvento);
   }

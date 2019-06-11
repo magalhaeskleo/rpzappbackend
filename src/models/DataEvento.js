@@ -6,7 +6,8 @@ const DataEvento = new mongoose.Schema(
     data: { type: String, required: true },
     horario: { type: String, required: true },
     local: { type: String, required: true },
-    pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pedido" }]
+    pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pedido" }],
+    nomeLista: [{ type: mongoose.Schema.Types.ObjectId, ref: "NomeLista" }]
   },
   {
     timestamps: true

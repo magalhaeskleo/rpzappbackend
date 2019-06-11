@@ -1,36 +1,33 @@
-const Pedido = require("../models/Pedido");
+const NomeLista = require("../models/NomeLista");
 const DataEvento = require("../models/DataEvento");
 const nodemailer = require("nodemailer");
 
-class PedidosController {
+class NomeListaController {
   async store(req, res) {
     const dataEvento = await DataEvento.findById(req.params.id);
 
-    const pedido = await Pedido.create({
-      nomeMusica: req.body.nomeMusica,
-      pedidoPor: req.body.pedidoPor
+    const nomeLista = await NomeLista.create({
+      nome: req.body.nome,
+      phone: req.body.phone
     });
 
-    dataEvento.pedidos.push(pedido);
+    dataEvento.nomeLista.push(nomeLista);
 
     await dataEvento.save();
 
-    return res.json(pedido);
+    return res.json(nomeLista);
   }
-
-  async emailSendPedidos(req, res) {
+  async emailSendNomeLista(req, res) {
     const dataEvento = await DataEvento.findById(req.params.id).populate(
-      "pedidos"
+      "nomeLista"
     );
 
     nodemailer.createTestAccount((err, account) => {
-      const itens = dataEvento.pedidos.map(item => {
-        return `<li><b>${item.nomeMusica}</b> pedido por :${
-          item.pedidoPor
-        }</li>`;
+      const itens = dataEvento.nomeLista.map(item => {
+        return `<li><b>${item.nome}</b> tel:${item.phone}</li>`;
       });
 
-      const htmlEmail = `<h3>Pedidos</h3> <ul> ${itens}</li> </ul> `;
+      const htmlEmail = `<h3>Nomes</h3> <ul> ${itens}</li> </ul> `;
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -44,8 +41,8 @@ class PedidosController {
 
       const mailOptions = {
         from: "magalhaeskleo@gmail.com",
-        to: "magalhaeskleo@gmail.com",
-        subject: `Pedidos para ${dataEvento.evento} na data ${
+        to: "gruporpzmuitoprazer@gmail.com",
+        subject: `Lista de nomes para ${dataEvento.evento} na data ${
           dataEvento.data
         } `,
         html: htmlEmail
@@ -61,4 +58,4 @@ class PedidosController {
     });
   }
 }
-module.exports = new PedidosController();
+module.exports = new NomeListaController();
