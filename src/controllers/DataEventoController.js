@@ -14,9 +14,9 @@ class DataEventoController {
   }
 
   async show(req, res) {
-    const dataEvento = await DataEvento.findById(req.params.id).populate(
-      "pedidos"
-    );
+    const dataEvento = await DataEvento.findById(req.params.id)
+      .populate("pedidos")
+      .populate("nomeLista");
     return res.json(dataEvento);
   }
   async delete(req, res) {
@@ -29,7 +29,9 @@ class DataEventoController {
   }
 
   async all(req, res) {
-    const dataEvento = await DataEvento.find().populate("pedidos");
+    const dataEvento = await DataEvento.find()
+      .populate("pedidos")
+      .populate("nomeLista");
     return res.json(dataEvento);
   }
 }
