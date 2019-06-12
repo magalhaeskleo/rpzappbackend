@@ -11,11 +11,11 @@ routes.post("/dataEvento/:id/pedidos", PedidosController.store);
 routes.post("/dataEvento/:id/nomeLista", NomeListaController.store);
 
 //envio de email
-routes.post(
+routes.get(
   "/dataEvento/:id/emailSendPedidos",
   PedidosController.emailSendPedidos
 );
-routes.post(
+routes.get(
   "/dataEvento/:id/emailSendNomeLista",
   NomeListaController.emailSendNomeLista
 );

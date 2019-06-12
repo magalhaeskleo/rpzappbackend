@@ -56,6 +56,7 @@ class NomeListaController {
         }
       });
     });
+    return res.json(dataEvento.nomeLista);
   }
 }
 module.exports = new NomeListaController();

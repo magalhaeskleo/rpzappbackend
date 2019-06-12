@@ -23,6 +23,7 @@ class PedidosController {
       "pedidos"
     );
 
+    console.log("Passou no emailsendpedido");
     nodemailer.createTestAccount((err, account) => {
       const itens = dataEvento.pedidos.map(item => {
         return `<li><b>${item.nomeMusica}</b> pedido por :${
@@ -59,6 +60,7 @@ class PedidosController {
         }
       });
     });
+    return res.json(dataEvento.pedidos);
   }
 }
 module.exports = new PedidosController();
