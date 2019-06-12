@@ -18,12 +18,12 @@ class PedidosController {
     return res.json(pedido);
   }
 
-  async emailSendPedidos(req, res) {
+  async emailSendPedidos(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
     const dataEvento = await DataEvento.findById(req.params.id).populate(
       "pedidos"
     );
 
-    console.log("Passou no emailsendpedido");
     nodemailer.createTestAccount((err, account) => {
       const itens = dataEvento.pedidos.map(item => {
         return `<li><b>${item.nomeMusica}</b> pedido por :${
@@ -36,7 +36,7 @@ class PedidosController {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
-        port: 587,
+        port: 465,
         auth: {
           user: "magalhaeskleo@gmail.com",
           pass: "Minhasenha"
@@ -45,7 +45,7 @@ class PedidosController {
 
       const mailOptions = {
         from: "magalhaeskleo@gmail.com",
-        to: "magalhaeskleo@gmail.com",
+        to: "gruporpzmuitoprazer@gmail.com",
         subject: `Pedidos para ${dataEvento.evento} na data ${
           dataEvento.data
         } `,
@@ -60,6 +60,7 @@ class PedidosController {
         }
       });
     });
+    next();
     return res.json(dataEvento.pedidos);
   }
 }

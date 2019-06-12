@@ -17,7 +17,8 @@ class NomeListaController {
 
     return res.json(nomeLista);
   }
-  async emailSendNomeLista(req, res) {
+  async emailSendNomeLista(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
     const dataEvento = await DataEvento.findById(req.params.id).populate(
       "nomeLista"
     );
@@ -27,12 +28,12 @@ class NomeListaController {
         return `<li><b>${item.nome}</b> tel:${item.phone}</li>`;
       });
 
-      const htmlEmail = `<h3>Nomes</h3> <ul> ${itens}</li> </ul> `;
+      const htmlEmail = `<h3>Nomes</h3><ul>${itens}</li></ul>`;
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
-        port: 587,
+        port: 465,
         auth: {
           user: "magalhaeskleo@gmail.com",
           pass: "Minhasenha"
@@ -44,7 +45,7 @@ class NomeListaController {
         to: "gruporpzmuitoprazer@gmail.com",
         subject: `Lista de nomes para ${dataEvento.evento} na data ${
           dataEvento.data
-        } `,
+        }`,
         html: htmlEmail
       };
 
@@ -56,6 +57,7 @@ class NomeListaController {
         }
       });
     });
+    next();
     return res.json(dataEvento.nomeLista);
   }
 }
