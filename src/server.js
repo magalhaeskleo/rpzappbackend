@@ -3,7 +3,13 @@ var cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Authorization", "Content-Type", "auth"]
+};
+
+app.use(cors(corsOptions));
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
