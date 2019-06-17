@@ -17,13 +17,8 @@ class NomeListaController {
 
     return res.json(nomeLista);
   }
-  async emailSendNomeLista(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    var auth = {
+  async emailSendNomeLista(req, res) {
+    /* var auth = {
       key: "AIzaSyAiKVJe8AaxBFcHymB6I2JT7 - NB4ZBvsiU",
       AuthorizationCode:
         "4/aQHikUUwcld1Y-NcOYggGzyOk604PD7O4u_6dT0AeHcT3itB0fYW_hw4DeYNHD2oyNdE06uCixpaLVQkL_q5has",
@@ -34,7 +29,7 @@ class NomeListaController {
       clientSecret: "Y5iia34GjWSgOPcRuGd8VsDUN",
       refreshToken: "1/_DGym2rLrzTjsg2SNh9la4yPTgZvUJJdB3UMFldP_ac"
     };
-
+*/
     const dataEvento = await DataEvento.findById(req.params.id).populate(
       "nomeLista"
     );
@@ -49,7 +44,10 @@ class NomeListaController {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         port: 465,
-        auth: auth
+        auth: {
+          user: "magalhaeskleo@gmail.com",
+          pass: "Minhasenha"
+        }
       });
 
       const mailOptions = {
@@ -63,14 +61,12 @@ class NomeListaController {
 
       transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-          console.log(error);
+          return console.log(error);
         } else {
           console.log("Email sent: " + info.response);
         }
       });
     });
-    next();
-    return res.json(dataEvento.nomeLista);
   }
 }
 module.exports = new NomeListaController();

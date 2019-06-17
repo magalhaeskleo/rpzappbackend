@@ -3,13 +3,16 @@ var cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Authorization", "Content-Type", "auth"]
-};
+app.use(cors());
 
-app.use(cors(corsOptions));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
